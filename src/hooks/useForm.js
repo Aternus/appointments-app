@@ -1,8 +1,6 @@
 import { useState } from "react";
 
 function useForm() {
-  console.log("use form");
-
   const [state, setState] = useState({});
 
   function updateField(ev) {

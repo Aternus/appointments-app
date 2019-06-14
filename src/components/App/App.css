@@ -24,6 +24,12 @@
   color: #337ab7;
   font-size: 1.3em;
   line-height: 100%;
+
+  caret-color: crimson;
+}
+
+.appointment-list span[contenteditable="true"] {
+  border-bottom: 1px dotted #000;
 }
 
 .appointment-list .label-item {
