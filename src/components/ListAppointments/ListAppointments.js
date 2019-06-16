@@ -7,10 +7,10 @@ const ListAppointments = ({ appointments, onDelete, onUpdate }) => {
   // construct the components list
   const CList = appointments.map(appointment => {
     return (
-      <div key={appointment.id} className="pet-item col media py-3">
+      <div key={appointment._id} className="appointment col media py-3">
         <div className="mr-3">
           <button
-            className="pet-delete btn btn-sm btn-danger"
+            className="delete btn btn-sm btn-danger"
             onClick={ev => {
               onDelete(appointment);
             }}
@@ -19,56 +19,51 @@ const ListAppointments = ({ appointments, onDelete, onUpdate }) => {
           </button>
         </div>
 
-        <div className="pet-info media-body">
-          <div className="pet-head d-flex">
+        <div className="media-body">
+          <div className="d-flex">
             <span
-              className="pet-name"
+              className="name"
               contentEditable
               suppressContentEditableWarning
-              onKeyUp={ev => {
+              onBlur={ev => {
                 const target = ev.target;
                 const value = target.textContent;
-
-                appointment.petName = value;
-
+                appointment[constants.apiFields.name] = value;
                 onUpdate(appointment);
               }}
             >
-              {appointment.petName}
+              {appointment[constants.apiFields.name]}
             </span>
-            <span className="apt-date ml-auto">
+            <span className="date ml-auto">
               <Moment
-                date={appointment.aptDate}
-                parse={constants.aptDateFormat}
+                date={appointment[constants.apiFields.date]}
                 format="dddd, MMM Do, YYYY @ HH:mm"
               />
             </span>
           </div>
 
-          <div className="owner-name">
-            <span className="label-item">Owner: </span>
+          <div className="host">
+            <span className="label">Host: </span>
             <span
               contentEditable
               suppressContentEditableWarning
-              onKeyUp={ev => {
+              onBlur={ev => {
                 const target = ev.target;
                 const value = target.textContent;
-
-                appointment.ownerName = value;
-
+                appointment[constants.apiFields.host] = value;
                 onUpdate(appointment);
               }}
             >
-              {appointment.ownerName}
+              {appointment[constants.apiFields.host]}
             </span>
           </div>
-          <div className="apt-notes">{appointment.aptNotes}</div>
+          <div className="notes">{appointment[constants.apiFields.notes]}</div>
         </div>
       </div>
     );
   });
 
-  return <div className="appointment-list item-list mb-3">{CList}</div>;
+  return <div className="list-appointments item-list mb-3">{CList}</div>;
 };
 
 export default ListAppointments;

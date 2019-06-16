@@ -1,5 +1,16 @@
 const constants = {
-  aptDateFormat: "YYYY-MM-DD HH:mm"
+  apiPath: "https://appointmentsapp-9c8d.restdb.io/rest",
+  get appointmentsApiPath() {
+    return `${this.apiPath}/appointments`;
+  },
+  apiKey: "5d060d0d27bc5b75bfeb7ceb",
+  dateFormat: "YYYY-MM-DD HH:mm",
+  apiFields: {
+    name: "name",
+    host: "host",
+    notes: "notes",
+    date: "date"
+  }
 };
 
 const enums = {
@@ -8,9 +19,9 @@ const enums = {
     DESC: 1
   },
   sortBy: {
-    petName: 0,
-    ownerName: 1,
-    aptDate: 2
+    name: 0,
+    host: 1,
+    date: 2
   }
 };
 

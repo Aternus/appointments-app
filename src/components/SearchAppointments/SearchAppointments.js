@@ -13,7 +13,6 @@ const SearchAppointments = ({
       <div className="col-md-6">
         <div className="input-group">
           <input
-            id="SearchApts"
             type="text"
             className="form-control"
             aria-label="Search Appointments"
@@ -36,21 +35,10 @@ const SearchAppointments = ({
               <button
                 className={
                   "sort-by dropdown-item" +
-                  (sortBy === enums.sortBy.petName ? " active" : "")
+                  (sortBy === enums.sortBy.date ? " active" : "")
                 }
                 onClick={() => {
-                  setSortBy(enums.sortBy.petName);
-                }}
-              >
-                Pet Name
-              </button>
-              <button
-                className={
-                  "sort-by dropdown-item" +
-                  (sortBy === enums.sortBy.aptDate ? " active" : "")
-                }
-                onClick={() => {
-                  setSortBy(enums.sortBy.aptDate);
+                  setSortBy(enums.sortBy.date);
                 }}
               >
                 Date
@@ -58,13 +46,24 @@ const SearchAppointments = ({
               <button
                 className={
                   "sort-by dropdown-item" +
-                  (sortBy === enums.sortBy.ownerName ? " active" : "")
+                  (sortBy === enums.sortBy.name ? " active" : "")
                 }
                 onClick={() => {
-                  setSortBy(enums.sortBy.ownerName);
+                  setSortBy(enums.sortBy.name);
                 }}
               >
-                Owner
+                Name
+              </button>
+              <button
+                className={
+                  "sort-by dropdown-item" +
+                  (sortBy === enums.sortBy.host ? " active" : "")
+                }
+                onClick={() => {
+                  setSortBy(enums.sortBy.host);
+                }}
+              >
+                Host
               </button>
               <div role="separator" className="dropdown-divider" />
               <button

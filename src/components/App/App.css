@@ -1,25 +1,47 @@
-.add-appointment .card-body {
-  display: none;
-}
-
-.apt-addheading {
+/**********************************************************
+    Add Appointments
+**********************************************************/
+.add-appointments__header {
   cursor: pointer;
   user-select: none;
 }
 
-.appointment-list {
+.add-appointments__body {
+  display: none;
+}
+
+.add-appointments.show-body .add-appointments__body {
+  display: block;
+}
+
+/**********************************************************
+    Search Appointments
+**********************************************************/
+.search-appointments .dropdown-item.active,
+.search-appointments .dropdown-item:active {
+  background-color: #a9aeb2;
+}
+
+/**********************************************************
+    List Appointments
+**********************************************************/
+.list-appointments {
   font-size: 1.1em;
 }
 
-.appointment-list .pet-item {
+.appointment {
   border-bottom: 1px dotted gray;
 }
 
-.appointment-list .pet-item:last-child {
+.appointment:last-child {
   border-bottom: none;
 }
 
-.appointment-list .pet-name {
+.appointment span[contenteditable="true"] {
+  border-bottom: 1px dotted #000;
+}
+
+.appointment .name {
   font-weight: 600;
   color: #337ab7;
   font-size: 1.3em;
@@ -28,24 +50,15 @@
   caret-color: crimson;
 }
 
-.appointment-list span[contenteditable="true"] {
-  border-bottom: 1px dotted #000;
-}
-
-.appointment-list .label-item {
+.appointment .host .label {
   font-weight: 600;
   color: #667b82;
 }
 
-.appointment-list .apt-date {
+.appointment .date {
   font-style: italic;
 }
 
-.appointment-list .apt-notes {
+.appointment .notes {
   line-height: 120%;
-}
-
-.dropdown-item.active,
-.dropdown-item:active {
-  background-color: #a9aeb2;
 }

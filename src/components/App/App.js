@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { without } from "lodash";
 import moment from "moment";
 
 import { constants, enums } from "config";
@@ -10,67 +9,91 @@ import AddAppointments from "components/AddAppointments/AddAppointments";
 import SearchAppointments from "components/SearchAppointments/SearchAppointments";
 import ListAppointments from "components/ListAppointments/ListAppointments";
 
+function validateResponse(response) {
+  if (!response.ok) {
+    throw response;
+  }
+  return response;
+}
+
+const commonHeaders = {
+  "content-type": "application/json",
+  "cache-control": "no-cache",
+  "x-apikey": constants.apiKey
+};
+
 function App() {
-  const [appointmentId, setAppointmentId] = useState(0);
+  const [apiCall, setApiCall] = useState(0);
   const [appointments, setAppointments] = useState([]);
   const [displayedAppointments, setDisplayedAppointments] = useState(
     appointments
   );
 
-  // API Call
-  useEffect(
-    () => {
-      fetch("./data.json")
-        .then(response => response.json())
-        .then(json => {
-          let id = appointmentId;
-
-          // process the json
-          const a = json.map(item => {
-            // add item id
-            if (!item.id) {
-              item.id = id;
-              id++;
-            }
-            return item;
-          });
-          setAppointmentId(id); // will trigger render
+  // API call
+  useEffect(() => {
+    fetch(constants.appointmentsApiPath, {
+      method: "GET",
+      headers: commonHeaders
+    })
+      .then(validateResponse)
+      .then(response => response.json())
+      .then(json => {
+        const a = json;
+        if (Array.isArray(a)) {
           setAppointments(a); // will trigger render
           setDisplayedAppointments(a); // will trigger render
-        })
-        .catch(err => {});
-    },
-    // eslint-disable-next-line
-    []
-  );
+        }
+      })
+      .catch(err => {
+        console.error(`GET Appointments Failed.`);
+      });
+  }, [apiCall]);
 
   // delete
-  function onDelete(appointment) {
-    const a = without(appointments, appointment);
-    setAppointments(a); // will trigger render
-    setDisplayedAppointments(a); // will trigger render
+  async function onDelete(appointment) {
+    return fetch(`${constants.appointmentsApiPath}/${appointment._id}`, {
+      method: "DELETE",
+      headers: commonHeaders
+    })
+      .then(validateResponse)
+      .then(response => {
+        setApiCall(!apiCall);
+        return response;
+      })
+      .catch(err => {
+        console.error(`DELETE Appointment ID "${appointment._id}" Failed.`);
+      });
   }
 
   // add
-  function onAdd(appointment) {
-    let id = appointmentId;
-    appointment.id = id;
-    id++;
-    setAppointmentId(id); // will trigger render
-
-    appointments.unshift(appointment);
-
-    setAppointments(appointments); // will trigger render
-    setDisplayedAppointments(appointments); // will trigger render
+  async function onAdd(appointment) {
+    return fetch(constants.appointmentsApiPath, {
+      method: "POST",
+      headers: commonHeaders,
+      body: JSON.stringify(appointment)
+    })
+      .then(validateResponse)
+      .then(response => {
+        setApiCall(!apiCall);
+        return response;
+      });
   }
 
   // update
-  function onUpdate(appointment) {
-    const idx = appointments.indexOf(appointment);
-    appointments.splice(idx, 1, appointment);
-
-    setAppointments(appointments); // will trigger render
-    setDisplayedAppointments(appointments); // will trigger render
+  async function onUpdate(appointment) {
+    return fetch(`${constants.appointmentsApiPath}/${appointment._id}`, {
+      method: "PUT",
+      headers: commonHeaders,
+      body: JSON.stringify(appointment)
+    })
+      .then(validateResponse)
+      .then(response => {
+        setApiCall(!apiCall);
+        return response;
+      })
+      .catch(err => {
+        console.error(`PUT Appointment ID "${appointment._id}" Failed.`);
+      });
   }
 
   /*
@@ -95,14 +118,14 @@ function App() {
 
     const filteredAppointments = appointments.filter(appointment => {
       // normalize values
-      const petName = appointment.petName.toLowerCase();
-      const ownerName = appointment.ownerName.toLowerCase();
-      const aptNotes = appointment.aptNotes.toLowerCase();
+      const name = appointment[constants.apiFields.name].toLowerCase();
+      const host = appointment[constants.apiFields.host].toLowerCase();
+      const notes = appointment[constants.apiFields.notes].toLowerCase();
 
       return (
-        petName.indexOf(searchValue) !== -1 ||
-        ownerName.indexOf(searchValue) !== -1 ||
-        aptNotes.indexOf(searchValue) !== -1
+        name.indexOf(searchValue) !== -1 ||
+        host.indexOf(searchValue) !== -1 ||
+        notes.indexOf(searchValue) !== -1
       );
     });
 
@@ -110,7 +133,7 @@ function App() {
   }
 
   // sort
-  const [sortBy, setSortBy] = useState(enums.sortBy.aptDate);
+  const [sortBy, setSortBy] = useState(enums.sortBy.date);
 
   // sort order
   const [sortOrder, setSortOrder] = useState(enums.sortOrder.DESC);
@@ -124,9 +147,9 @@ function App() {
     let y = b[key];
 
     // sort by date is unique
-    if (sortBy === enums.sortBy.aptDate) {
-      x = moment(x, constants.aptDateFormat).unix();
-      y = moment(y, constants.aptDateFormat).unix();
+    if (sortBy === enums.sortBy.date) {
+      x = moment(x, constants.dateFormat).unix();
+      y = moment(y, constants.dateFormat).unix();
     } else {
       x = x.toLowerCase();
       y = y.toLowerCase();
@@ -146,10 +169,10 @@ function App() {
    *******************************************************/
 
   return (
-    <main className="page bg-white" id="petratings">
+    <main className="page bg-white">
       <div className="container">
         <div className="row">
-          <div className="col-md-12 bg-white">
+          <div className="col-md-12">
             <div className="container">
               <AddAppointments
                 displayForm={displayAddForm}
