@@ -57,8 +57,7 @@ const AddAppointment = ({ displayForm, toggleDisplayForm, handleAdd }) => {
   return (
     <div
       className={
-        "add-appointments card textcenter mt-3" +
-        (displayForm ? " show-body" : "")
+        "add-appointments card mt-3" + (displayForm ? " show-body" : "")
       }
     >
       <div
@@ -73,9 +72,9 @@ const AddAppointment = ({ displayForm, toggleDisplayForm, handleAdd }) => {
 
       <div className="add-appointments__body card-body">
         <form noValidate onSubmit={onSubmit}>
-          <div className="form-group form-row">
+          <div className="row mb-3">
             <label
-              className="col-md-2 col-form-label text-md-right"
+              className="col-md-2 form-label text-md-end"
               htmlFor={formFields.name}
             >
               Name
@@ -93,9 +92,9 @@ const AddAppointment = ({ displayForm, toggleDisplayForm, handleAdd }) => {
             </div>
           </div>
 
-          <div className="form-group form-row">
+          <div className="row mb-3">
             <label
-              className="col-md-2 col-form-label text-md-right"
+              className="col-md-2 col-form-label text-md-end"
               htmlFor={formFields.host}
             >
               Host
@@ -113,9 +112,9 @@ const AddAppointment = ({ displayForm, toggleDisplayForm, handleAdd }) => {
             </div>
           </div>
 
-          <div className="form-group form-row">
+          <div className="row mb-3">
             <label
-              className="col-md-2 col-form-label text-md-right"
+              className="col-md-2 col-form-label text-md-end"
               htmlFor={formFields.date}
             >
               Date
@@ -131,7 +130,7 @@ const AddAppointment = ({ displayForm, toggleDisplayForm, handleAdd }) => {
               />
             </div>
             <label
-              className="col-md-2 col-form-label text-md-right"
+              className="col-md-2 col-form-label text-md-end"
               htmlFor={formFields.time}
             >
               Time
@@ -148,11 +147,8 @@ const AddAppointment = ({ displayForm, toggleDisplayForm, handleAdd }) => {
             </div>
           </div>
 
-          <div className="form-group form-row">
-            <label
-              className="col-md-2 text-md-right"
-              htmlFor={formFields.notes}
-            >
+          <div className="row mb-3">
+            <label className="col-md-2 text-md-end" htmlFor={formFields.notes}>
               Notes
             </label>
             <div className="col-md-10">
@@ -169,8 +165,8 @@ const AddAppointment = ({ displayForm, toggleDisplayForm, handleAdd }) => {
             </div>
           </div>
 
-          <div className="form-group form-row mb-0">
-            <div className="col-md-2 text-md-right">
+          <div className="row mb-0">
+            <div className="col-md-2 text-md-end">
               {!_.isEmpty(errors) ? "Errors" : ""}
             </div>
             <div className="col-md-6">
@@ -186,8 +182,8 @@ const AddAppointment = ({ displayForm, toggleDisplayForm, handleAdd }) => {
                 </ul>
               )}
             </div>
-            <div className="col-md-4">
-              <button type="submit" className="btn btn-primary d-block ml-auto">
+            <div className="col-md-4 text-end">
+              <button type="submit" className="btn btn-primary">
                 Add Appointment
               </button>
             </div>
