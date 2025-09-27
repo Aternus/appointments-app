@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { FaPlus, FaMinus } from "react-icons/fa";
 import moment from "moment";
 import _ from "lodash";
+
+import { Accordion } from "bootstrap";
+
 import useForm from "hooks/useForm";
 import { constants } from "config";
 
@@ -55,140 +57,150 @@ const AddAppointment = ({ displayForm, toggleDisplayForm, handleAdd }) => {
   }
 
   return (
-    <div
-      className={
-        "add-appointments card mt-3" + (displayForm ? " show-body" : "")
-      }
-    >
-      <div
-        className="add-appointments__header card-header bg-primary text-white"
-        onClick={(ev) => {
-          toggleDisplayForm();
-        }}
-      >
-        {displayForm ? <FaMinus /> : <FaPlus />}
-        &nbsp; Add Appointment
-      </div>
+    <div id="addAppointment" className="accordion mt-3">
+      <div className="accordion-item">
+        <div className="accordion-header">
+          <button
+            className="accordion-button collapsed bg-primary text-white"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#addAppointmentForm"
+            aria-expanded="false"
+            aria-controls="addAppointmentForm"
+          >
+            Add Appointment
+          </button>
+        </div>
 
-      <div className="add-appointments__body card-body">
-        <form noValidate onSubmit={onSubmit}>
-          <div className="row mb-3">
-            <label
-              className="col-md-2 form-label text-md-end"
-              htmlFor={formFields.name}
-            >
-              Name
-            </label>
-            <div className="col-md-10">
-              <input
-                id={formFields.name}
-                type="text"
-                className="form-control"
-                name={formFields.name}
-                value={getField(formFields.name)}
-                placeholder="Name..."
-                onChange={updateField}
-              />
-            </div>
-          </div>
+        <div
+          id="addAppointmentForm"
+          className="accordion-collapse collapse"
+          data-bs-parent="#addAppointment"
+        >
+          <div className="accordion-body">
+            <form noValidate onSubmit={onSubmit}>
+              <div className="row mb-3">
+                <label
+                  className="col-md-2 form-label text-md-end"
+                  htmlFor={formFields.name}
+                >
+                  Name
+                </label>
+                <div className="col-md-10">
+                  <input
+                    id={formFields.name}
+                    type="text"
+                    className="form-control"
+                    name={formFields.name}
+                    value={getField(formFields.name)}
+                    placeholder="Name..."
+                    onChange={updateField}
+                  />
+                </div>
+              </div>
 
-          <div className="row mb-3">
-            <label
-              className="col-md-2 col-form-label text-md-end"
-              htmlFor={formFields.host}
-            >
-              Host
-            </label>
-            <div className="col-md-10">
-              <input
-                id={formFields.host}
-                type="text"
-                className="form-control"
-                name={formFields.host}
-                value={getField(formFields.host)}
-                placeholder="Host..."
-                onChange={updateField}
-              />
-            </div>
-          </div>
+              <div className="row mb-3">
+                <label
+                  className="col-md-2 col-form-label text-md-end"
+                  htmlFor={formFields.host}
+                >
+                  Host
+                </label>
+                <div className="col-md-10">
+                  <input
+                    id={formFields.host}
+                    type="text"
+                    className="form-control"
+                    name={formFields.host}
+                    value={getField(formFields.host)}
+                    placeholder="Host..."
+                    onChange={updateField}
+                  />
+                </div>
+              </div>
 
-          <div className="row mb-3">
-            <label
-              className="col-md-2 col-form-label text-md-end"
-              htmlFor={formFields.date}
-            >
-              Date
-            </label>
-            <div className="col-md-4">
-              <input
-                id={formFields.date}
-                type="date"
-                className="form-control"
-                name={formFields.date}
-                value={getField(formFields.date)}
-                onChange={updateField}
-              />
-            </div>
-            <label
-              className="col-md-2 col-form-label text-md-end"
-              htmlFor={formFields.time}
-            >
-              Time
-            </label>
-            <div className="col-md-4">
-              <input
-                id={formFields.time}
-                type="time"
-                className="form-control"
-                name={formFields.time}
-                value={getField(formFields.time)}
-                onChange={updateField}
-              />
-            </div>
-          </div>
+              <div className="row mb-3">
+                <label
+                  className="col-md-2 col-form-label text-md-end"
+                  htmlFor={formFields.date}
+                >
+                  Date
+                </label>
+                <div className="col-md-4">
+                  <input
+                    id={formFields.date}
+                    type="date"
+                    className="form-control"
+                    name={formFields.date}
+                    value={getField(formFields.date)}
+                    onChange={updateField}
+                  />
+                </div>
+                <label
+                  className="col-md-2 col-form-label text-md-end"
+                  htmlFor={formFields.time}
+                >
+                  Time
+                </label>
+                <div className="col-md-4">
+                  <input
+                    id={formFields.time}
+                    type="time"
+                    className="form-control"
+                    name={formFields.time}
+                    value={getField(formFields.time)}
+                    onChange={updateField}
+                  />
+                </div>
+              </div>
 
-          <div className="row mb-3">
-            <label className="col-md-2 text-md-end" htmlFor={formFields.notes}>
-              Notes
-            </label>
-            <div className="col-md-10">
-              <textarea
-                id={formFields.notes}
-                className="form-control"
-                rows="4"
-                cols="50"
-                name={formFields.notes}
-                value={getField(formFields.notes)}
-                placeholder="Appointment Notes"
-                onChange={updateField}
-              />
-            </div>
-          </div>
+              <div className="row mb-3">
+                <label
+                  className="col-md-2 text-md-end"
+                  htmlFor={formFields.notes}
+                >
+                  Notes
+                </label>
+                <div className="col-md-10">
+                  <textarea
+                    id={formFields.notes}
+                    className="form-control"
+                    rows="4"
+                    cols="50"
+                    name={formFields.notes}
+                    value={getField(formFields.notes)}
+                    placeholder="Appointment Notes"
+                    onChange={updateField}
+                  />
+                </div>
+              </div>
 
-          <div className="row mb-0">
-            <div className="col-md-2 text-md-end">
-              {!_.isEmpty(errors) ? "Errors" : ""}
-            </div>
-            <div className="col-md-6">
-              {!_.isEmpty(errors) && (
-                <ul>
-                  {errors.list.map((error, idx) => {
-                    return (
-                      <li key={idx}>
-                        {_.capitalize(error.field)}: {error.message[0]}
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
-            </div>
-            <div className="col-md-4 text-end">
-              <button type="submit" className="btn btn-primary">
-                Add Appointment
-              </button>
-            </div>
+              <div className="row mb-0">
+                <div className="col-md-2 text-md-end">
+                  {!_.isEmpty(errors) ? "Errors" : ""}
+                </div>
+                <div className="col-md-6">
+                  {!_.isEmpty(errors) && (
+                    <ul>
+                      {errors.list.map((error, idx) => {
+                        return (
+                          <li key={idx}>
+                            {_.capitalize(error.field)}: {error.message[0]}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </div>
+                <div className="col-md-4 text-end">
+                  <button type="submit" className="btn btn-primary">
+                    Add Appointment
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
