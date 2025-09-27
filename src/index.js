@@ -1,12 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 
-import "bootstrap/dist/css/bootstrap.css";
-import "./index.css";
-
-import "jquery/dist/jquery";
-import "popper.js/dist/umd/popper";
-import "bootstrap/dist/js/bootstrap";
+import "index.scss";
 
 import * as serviceWorker from "./serviceWorker";
 import App from "components/App/App";

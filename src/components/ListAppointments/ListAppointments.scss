@@ -1,0 +1,37 @@
+.list-appointments {
+  font-size: 1.1em;
+}
+
+.appointment {
+  border-bottom: 1px dotted gray;
+}
+
+.appointment:last-child {
+  border-bottom: none;
+}
+
+.appointment span[contenteditable="true"] {
+  border-bottom: 1px dotted #000;
+}
+
+.appointment .name {
+  font-weight: 600;
+  color: #337ab7;
+  font-size: 1.3em;
+  line-height: 100%;
+
+  caret-color: crimson;
+}
+
+.appointment .host .label {
+  font-weight: 600;
+  color: #667b82;
+}
+
+.appointment .date {
+  font-style: italic;
+}
+
+.appointment .notes {
+  line-height: 120%;
+}

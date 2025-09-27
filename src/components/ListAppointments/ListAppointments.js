@@ -3,15 +3,17 @@ import Moment from "react-moment";
 import { FaTimes } from "react-icons/fa";
 import { constants } from "config";
 
+import "./ListAppointments.scss";
+
 const ListAppointments = ({ appointments, onDelete, onUpdate }) => {
   // construct the components list
-  const CList = appointments.map(appointment => {
+  const CList = appointments.map((appointment) => {
     return (
       <div key={appointment._id} className="appointment col media py-3">
         <div className="mr-3">
           <button
             className="delete btn btn-sm btn-danger"
-            onClick={ev => {
+            onClick={(ev) => {
               onDelete(appointment);
             }}
           >
@@ -25,7 +27,7 @@ const ListAppointments = ({ appointments, onDelete, onUpdate }) => {
               className="name"
               contentEditable
               suppressContentEditableWarning
-              onBlur={ev => {
+              onBlur={(ev) => {
                 const target = ev.target;
                 const value = target.textContent;
                 appointment[constants.apiFields.name] = value;
@@ -47,7 +49,7 @@ const ListAppointments = ({ appointments, onDelete, onUpdate }) => {
             <span
               contentEditable
               suppressContentEditableWarning
-              onBlur={ev => {
+              onBlur={(ev) => {
                 const target = ev.target;
                 const value = target.textContent;
                 appointment[constants.apiFields.host] = value;

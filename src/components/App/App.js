@@ -3,9 +3,7 @@ import moment from "moment";
 
 import { constants, enums } from "config";
 
-import "./App.css";
-
-import AddAppointments from "components/AddAppointments/AddAppointments";
+import AddAppointment from "components/AddAppointment/AddAppointment";
 import SearchAppointments from "components/SearchAppointments/SearchAppointments";
 import ListAppointments from "components/ListAppointments/ListAppointments";
 
@@ -19,32 +17,31 @@ function validateResponse(response) {
 const commonHeaders = {
   "content-type": "application/json",
   "cache-control": "no-cache",
-  "x-apikey": constants.apiKey
+  "x-apikey": constants.apiKey,
 };
 
 function App() {
   const [apiCall, setApiCall] = useState(0);
   const [appointments, setAppointments] = useState([]);
-  const [displayedAppointments, setDisplayedAppointments] = useState(
-    appointments
-  );
+  const [displayedAppointments, setDisplayedAppointments] =
+    useState(appointments);
 
   // API call
   useEffect(() => {
     fetch(constants.appointmentsApiPath, {
       method: "GET",
-      headers: commonHeaders
+      headers: commonHeaders,
     })
       .then(validateResponse)
-      .then(response => response.json())
-      .then(json => {
+      .then((response) => response.json())
+      .then((json) => {
         const a = json;
         if (Array.isArray(a)) {
           setAppointments(a); // will trigger render
           setDisplayedAppointments(a); // will trigger render
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(`GET Appointments Failed.`);
       });
   }, [apiCall]);
@@ -53,14 +50,14 @@ function App() {
   async function onDelete(appointment) {
     return fetch(`${constants.appointmentsApiPath}/${appointment._id}`, {
       method: "DELETE",
-      headers: commonHeaders
+      headers: commonHeaders,
     })
       .then(validateResponse)
-      .then(response => {
+      .then((response) => {
         setApiCall(!apiCall);
         return response;
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(`DELETE Appointment ID "${appointment._id}" Failed.`);
       });
   }
@@ -70,10 +67,10 @@ function App() {
     return fetch(constants.appointmentsApiPath, {
       method: "POST",
       headers: commonHeaders,
-      body: JSON.stringify(appointment)
+      body: JSON.stringify(appointment),
     })
       .then(validateResponse)
-      .then(response => {
+      .then((response) => {
         setApiCall(!apiCall);
         return response;
       });
@@ -84,14 +81,14 @@ function App() {
     return fetch(`${constants.appointmentsApiPath}/${appointment._id}`, {
       method: "PUT",
       headers: commonHeaders,
-      body: JSON.stringify(appointment)
+      body: JSON.stringify(appointment),
     })
       .then(validateResponse)
-      .then(response => {
+      .then((response) => {
         setApiCall(!apiCall);
         return response;
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(`PUT Appointment ID "${appointment._id}" Failed.`);
       });
   }
@@ -116,7 +113,7 @@ function App() {
     // normalize search value
     searchValue = searchValue.toLowerCase();
 
-    const filteredAppointments = appointments.filter(appointment => {
+    const filteredAppointments = appointments.filter((appointment) => {
       // normalize values
       const name = appointment[constants.apiFields.name].toLowerCase();
       const host = appointment[constants.apiFields.host].toLowerCase();
@@ -174,7 +171,7 @@ function App() {
         <div className="row">
           <div className="col-md-12">
             <div className="container">
-              <AddAppointments
+              <AddAppointment
                 displayForm={displayAddForm}
                 toggleDisplayForm={toggleDisplayAddForm}
                 handleAdd={onAdd}

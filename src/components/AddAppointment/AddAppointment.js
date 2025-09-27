@@ -5,15 +5,17 @@ import _ from "lodash";
 import useForm from "hooks/useForm";
 import { constants } from "config";
 
+import "./AddAppointment.scss";
+
 const formFields = {
   name: "name",
   host: "host",
   notes: "notes",
   date: "date",
-  time: "time"
+  time: "time",
 };
 
-const AddAppointments = ({ displayForm, toggleDisplayForm, handleAdd }) => {
+const AddAppointment = ({ displayForm, toggleDisplayForm, handleAdd }) => {
   const { getField, updateField, clear } = useForm();
   const [errors, setErrors] = useState({});
 
@@ -24,7 +26,7 @@ const AddAppointments = ({ displayForm, toggleDisplayForm, handleAdd }) => {
     // calculate moment
     const m = moment(
       `${getField(formFields.date)} ${getField(formFields.time)}`,
-      constants.dateFormat
+      constants.dateFormat,
     );
 
     // format form data
@@ -32,12 +34,12 @@ const AddAppointments = ({ displayForm, toggleDisplayForm, handleAdd }) => {
       [constants.apiFields.name]: getField(formFields.name),
       [constants.apiFields.host]: getField(formFields.host),
       [constants.apiFields.notes]: getField(formFields.notes),
-      [constants.apiFields.date]: m.toISOString()
+      [constants.apiFields.date]: m.toISOString(),
     };
 
     // add appointment
     handleAdd(appointment)
-      .then(response => {
+      .then((response) => {
         // clear form
         clear();
 
@@ -47,7 +49,7 @@ const AddAppointments = ({ displayForm, toggleDisplayForm, handleAdd }) => {
         // close form
         toggleDisplayForm();
       })
-      .catch(response => {
+      .catch((response) => {
         response.json().then(setErrors);
       });
   }
@@ -61,7 +63,7 @@ const AddAppointments = ({ displayForm, toggleDisplayForm, handleAdd }) => {
     >
       <div
         className="add-appointments__header card-header bg-primary text-white"
-        onClick={ev => {
+        onClick={(ev) => {
           toggleDisplayForm();
         }}
       >
@@ -196,4 +198,4 @@ const AddAppointments = ({ displayForm, toggleDisplayForm, handleAdd }) => {
   );
 };
 
-export default AddAppointments;
+export default AddAppointment;
