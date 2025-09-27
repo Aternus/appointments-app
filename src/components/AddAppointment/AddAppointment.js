@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import moment from "moment";
 import _ from "lodash";
-
 import { Accordion } from "bootstrap";
-
 import useForm from "hooks/useForm";
 import { constants } from "config";
-
-import "./AddAppointment.scss";
 
 const formFields = {
   name: "name",

@@ -1,6 +1,5 @@
 import React from "react";
 import { Dropdown } from "bootstrap";
-
 import { enums } from "config";
 
 import "./SearchAppointments.scss";
