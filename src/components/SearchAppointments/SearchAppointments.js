@@ -1,4 +1,6 @@
 import React from "react";
+import { Dropdown } from "bootstrap";
+
 import { enums } from "config";
 
 import "./SearchAppointments.scss";
@@ -22,10 +24,11 @@ const SearchAppointments = ({
               handleSearch(ev.target.value);
             }}
           />
+
           <button
             type="button"
             className="btn btn-primary dropdown-toggle"
-            data-toggle="dropdown"
+            data-bs-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
           >
@@ -66,7 +69,9 @@ const SearchAppointments = ({
             >
               Host
             </button>
-            <div role="separator" className="dropdown-divider" />
+
+            <hr className="dropdown-divider" />
+
             <button
               className={
                 "sort-by dropdown-item" +
